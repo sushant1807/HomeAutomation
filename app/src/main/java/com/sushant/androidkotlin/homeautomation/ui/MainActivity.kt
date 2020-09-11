@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -15,6 +16,7 @@ import com.sushant.androidkotlin.homeautomation.databinding.ActivityDeviceListBi
 import com.sushant.androidkotlin.homeautomation.models.Device
 import com.sushant.androidkotlin.homeautomation.viewmodels.DeviceListViewModel
 import io.reactivex.Completable
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 
@@ -33,6 +35,7 @@ class MainActivity : AppCompatActivity() {
 
         mActivityBinding.viewModel = mViewModel
         mActivityBinding.lifecycleOwner = this
+        Timber.plant(Timber.DebugTree());
 
         initializeRecyclerView()
         initializeObservers()
@@ -46,39 +49,64 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initializeObservers() {
-        mViewModel.fetchDevicesFromServer(this, false).observe(this, Observer { kt ->
+        mViewModel.fetchDevicesFromServer(this, false).observe(this,
+            Observer { kt ->
             Timber.e("initializeObservers ")
-            //if (kt!= null) {
             try {
-                mAdapter.setData(kt)
-                putToRoomDb(kt, application)
+                //mAdapter.setData(kt)
+                if (kt.isNotEmpty()) {
+                    putToRoomDb(kt, application)
+                }
             } catch (e: Exception ) {
                 e.printStackTrace()
                 Timber.e("Catch exception %s ", e.message)
             }
 
         })
-        /*mViewModel.mShowProgressBar.observe(this, Observer { bt ->
+        mViewModel.mShowProgressBar.observe(this, Observer { bt ->
             if (bt) {
                 mActivityBinding.progressBar.visibility = View.VISIBLE
-               // mActivityBinding.floatingActionButton.In()
             } else {
                 mActivityBinding.progressBar.visibility = View.GONE
-               // mActivityBinding.floatingActionButton.show()
             }
-        })*/
+        })
     }
 
     @SuppressLint("CheckResult")
     private fun putToRoomDb(devices: List<Device>, context: Context) {
+        val db = HomeAutomationDatabase.getInstance(context)
+        val list = arrayListOf<String>()
         for (device in devices) {
-            val db = HomeAutomationDatabase.getInstance(context)
-            Completable.fromRunnable(Runnable {
+            Completable.fromRunnable {
                 db.devicesDao.insert(device)
-            })
+            }
                 .subscribeOn(Schedulers.io())
-                .subscribe();
+                .subscribe {
+                    list.add(device.deviceName)
+                }
 
         }
+
+        if (devices.size === list.size) {
+            getDevicesFromLocal(context)
+        }
+
+    }
+
+    @SuppressLint("CheckResult")
+    private fun getDevicesFromLocal(context: Context) {
+        val db = HomeAutomationDatabase.getInstance(context)
+
+        db.devicesDao.getAllDevices()
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribe {
+                it -> mAdapter.setData(it);
+                Timber.e("getDevicesFromLocal %s ", it.toString())
+            }
+
+
+
+
     }
 }

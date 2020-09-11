@@ -13,7 +13,7 @@ import timber.log.Timber
 class DeviceListViewModel : ViewModel() {
 
     private var mList: MutableLiveData<List<Device>> =
-        MutableLiveData<List<Device>>().apply { value = null}
+        MutableLiveData<List<Device>>().apply { value = emptyList()}
     var mShowProgressBar: MutableLiveData<Boolean> = MutableLiveData()
     private var mShowNetworkError: MutableLiveData<Boolean> = MutableLiveData()
     private var mShowApiError: MutableLiveData<Boolean> = MutableLiveData()
@@ -39,11 +39,16 @@ class DeviceListViewModel : ViewModel() {
         } else {
             mShowNetworkError.value = true
             Timber.e("fetchDevicesFromServer else ")
+            onNoInternet();
         }
         return mList
     }
 
     fun onRefreshClicked(view : View){
         fetchDevicesFromServer(view.context, true)
+    }
+
+    private fun onNoInternet() {
+        //Display No internet Message and Fetch the data from the Local DB if stored.
     }
 }
