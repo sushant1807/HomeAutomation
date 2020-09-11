@@ -1,5 +1,7 @@
 package com.sushant.androidkotlin.homeautomation.ui
 
+import android.annotation.SuppressLint
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
@@ -8,8 +10,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sushant.androidkotlin.homeautomation.R
 import com.sushant.androidkotlin.homeautomation.adapters.DevicesAdapter
+import com.sushant.androidkotlin.homeautomation.database.HomeAutomationDatabase
 import com.sushant.androidkotlin.homeautomation.databinding.ActivityDeviceListBinding
+import com.sushant.androidkotlin.homeautomation.models.Device
 import com.sushant.androidkotlin.homeautomation.viewmodels.DeviceListViewModel
+import io.reactivex.Completable
+import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 
 class MainActivity : AppCompatActivity() {
@@ -42,7 +48,15 @@ class MainActivity : AppCompatActivity() {
     private fun initializeObservers() {
         mViewModel.fetchDevicesFromServer(this, false).observe(this, Observer { kt ->
             Timber.e("initializeObservers ")
-            mAdapter.setData(kt)
+            //if (kt!= null) {
+            try {
+                mAdapter.setData(kt)
+                putToRoomDb(kt, application)
+            } catch (e: Exception ) {
+                e.printStackTrace()
+                Timber.e("Catch exception %s ", e.message)
+            }
+
         })
         /*mViewModel.mShowProgressBar.observe(this, Observer { bt ->
             if (bt) {
@@ -53,5 +67,18 @@ class MainActivity : AppCompatActivity() {
                // mActivityBinding.floatingActionButton.show()
             }
         })*/
+    }
+
+    @SuppressLint("CheckResult")
+    private fun putToRoomDb(devices: List<Device>, context: Context) {
+        for (device in devices) {
+            val db = HomeAutomationDatabase.getInstance(context)
+            Completable.fromRunnable(Runnable {
+                db.devicesDao.insert(device)
+            })
+                .subscribeOn(Schedulers.io())
+                .subscribe();
+
+        }
     }
 }

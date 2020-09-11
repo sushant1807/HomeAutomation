@@ -1,8 +1,7 @@
 package com.sushant.androidkotlin.homeautomation.repositories
 
-import androidx.lifecycle.LiveData
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import com.sushant.androidkotlin.homeautomation.database.DevicesDao
 import com.sushant.androidkotlin.homeautomation.interfaces.NetworkCallbacks
 import com.sushant.androidkotlin.homeautomation.models.Device
 import com.sushant.androidkotlin.homeautomation.models.Devices
@@ -44,7 +43,8 @@ class DeviceRepository(){
         mDevicesResponse.enqueue(object : Callback<Devices> {
 
             override fun onResponse(call: Call<Devices>, response: Response<Devices>) {
-                Timber.e("onResponse %s ", response.body())
+                //Log.e("Error", "Reached into success response " +response.body()!!.devices.size)
+                //Timber.e("onResponse %s ", response.body())
                 mDeviceList.value = response.body()!!.devices
                 mCallback.onNetworkConnected()
             }

@@ -4,12 +4,12 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.sushant.androidkotlin.homeautomation.models.Devices
+import com.sushant.androidkotlin.homeautomation.models.Device
 
-@Database(entities = [Devices::class], version = DB_VERSION, exportSchema = false)
+@Database(entities = [Device::class], version = DB_VERSION, exportSchema = false)
 abstract class HomeAutomationDatabase : RoomDatabase() {
 
-    abstract val devicesDao: DevicesDao
+    abstract val devicesDao: DeviceDao
 
     companion object {
         @Volatile
@@ -21,8 +21,7 @@ abstract class HomeAutomationDatabase : RoomDatabase() {
 
                 if (instance == null) {
                     instance = Room.databaseBuilder(
-                        context.applicationContext, HomeAutomationDatabase::class.java, DB_NAME
-                    )
+                        context.applicationContext, HomeAutomationDatabase::class.java, DB_NAME)
                         .fallbackToDestructiveMigration()
                         .build()
                     INSTANCE = instance
@@ -33,6 +32,6 @@ abstract class HomeAutomationDatabase : RoomDatabase() {
     }
 }
 
-const val DB_VERSION = 1
+const val DB_VERSION = 5
 
 const val DB_NAME = "HomeAutomation.db"

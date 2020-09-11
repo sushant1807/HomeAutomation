@@ -1,6 +1,8 @@
 package com.sushant.androidkotlin.homeautomation.models
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
 /*
@@ -13,9 +15,9 @@ data class Device(val id: Int, val deviceName: String, val position: Int, val pr
 @Entity(tableName = "device")
 data class Device (
 
-    @SerializedName("id") val id : Int,
-    @SerializedName("deviceName") val deviceName : String,
-    @SerializedName("intensity") val intensity : Int,
-    @SerializedName("mode") val mode : String,
-    @SerializedName("productType") val productType : String
+    @PrimaryKey @ColumnInfo @SerializedName("id") val id : Int,
+    @ColumnInfo @SerializedName("deviceName") val deviceName : String,
+    @ColumnInfo @SerializedName("intensity") val intensity : Int,
+    @ColumnInfo @SerializedName ("mode") val mode : String?,
+    @ColumnInfo @SerializedName("productType") val productType : String
 )
