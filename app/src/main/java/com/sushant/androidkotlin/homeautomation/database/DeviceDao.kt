@@ -6,8 +6,6 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.sushant.androidkotlin.homeautomation.models.Device
 import io.reactivex.Flowable
-import io.reactivex.Single
-import java.util.concurrent.Callable
 
 @Dao
 interface DeviceDao {

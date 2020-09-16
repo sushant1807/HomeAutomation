@@ -4,12 +4,19 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
+import com.sushant.androidkotlin.homeautomation.models.Address
 import com.sushant.androidkotlin.homeautomation.models.Device
+import com.sushant.androidkotlin.homeautomation.models.User
 
-@Database(entities = [Device::class], version = DB_VERSION, exportSchema = false)
+@Database(entities = [Device::class, User::class, Address::class], version = DB_VERSION,
+    exportSchema = false)
+@TypeConverters(User.UserAddressConverter::class)
 abstract class HomeAutomationDatabase : RoomDatabase() {
 
     abstract val devicesDao: DeviceDao
+    abstract val userDao: UserDao
+    abstract val addressDao: AddressDao
 
     companion object {
         @Volatile
@@ -32,6 +39,6 @@ abstract class HomeAutomationDatabase : RoomDatabase() {
     }
 }
 
-const val DB_VERSION = 5
+const val DB_VERSION = 4
 
 const val DB_NAME = "HomeAutomation.db"

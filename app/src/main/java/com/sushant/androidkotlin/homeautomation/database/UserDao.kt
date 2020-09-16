@@ -5,6 +5,8 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import com.sushant.androidkotlin.homeautomation.models.User
+import io.reactivex.Flowable
+import io.reactivex.Single
 
 @Dao
 interface UserDao {
@@ -12,10 +14,10 @@ interface UserDao {
     @Insert
     fun insertIntoUser(user: User)
 
-    @Query("DELETE FROM device")
+    @Query("DELETE FROM user")
     fun clearUsers()
 
     @Query("SELECT * FROM user")
-    fun getUserDetails(): LiveData<User>
+    fun getUserDetails(): Single<User>
 
 }

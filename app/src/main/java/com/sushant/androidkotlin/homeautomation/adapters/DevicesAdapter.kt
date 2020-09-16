@@ -7,8 +7,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.sushant.androidkotlin.homeautomation.R
 import com.sushant.androidkotlin.homeautomation.databinding.DeviceListItemBinding
 import com.sushant.androidkotlin.homeautomation.models.Device
+import timber.log.Timber
 
-class DevicesAdapter (var mList: List<Device>? = listOf()) :
+class DevicesAdapter (private var mList: List<Device>? = listOf()) :
     RecyclerView.Adapter<DevicesAdapter.ViewHolder>() {
 
     fun setData(list: List<Device>) {
@@ -16,16 +17,12 @@ class DevicesAdapter (var mList: List<Device>? = listOf()) :
         notifyDataSetChanged()
     }
 
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
-    ): DevicesAdapter.ViewHolder {
-        val binding: DeviceListItemBinding = DataBindingUtil.inflate(
-            LayoutInflater.from(parent.context),
-            R.layout.device_list_item,
-            parent,
-            false
-        )
+    //private var clickListener: ClickListener? = null
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val binding: DeviceListItemBinding =
+            DataBindingUtil.inflate(LayoutInflater.from(parent.context),
+                R.layout.device_list_item, parent, false)
         return ViewHolder(binding)
     }
 
@@ -33,11 +30,13 @@ class DevicesAdapter (var mList: List<Device>? = listOf()) :
         return mList!!.size
     }
 
-    override fun onBindViewHolder(holder: DevicesAdapter.ViewHolder, position: Int) {
-        holder.itemBinding.device = mList!!.get(position)
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.itemBinding.device = mList!![position]
+
     }
 
     class ViewHolder(var itemBinding: DeviceListItemBinding) :
         RecyclerView.ViewHolder(itemBinding.root) {
+
     }
 }
