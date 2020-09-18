@@ -9,12 +9,14 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sushant.androidkotlin.homeautomation.R
-import com.sushant.androidkotlin.homeautomation.adapters.DevicesAdapter
+import com.sushant.androidkotlin.homeautomation.adapters.DeviceListAdapter
+import com.sushant.androidkotlin.homeautomation.adapters.OnDeviceItemClickListner
 import com.sushant.androidkotlin.homeautomation.database.HomeAutomationDatabase
 import com.sushant.androidkotlin.homeautomation.databinding.ActivityDeviceListBinding
 import com.sushant.androidkotlin.homeautomation.models.Device
@@ -25,10 +27,11 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Consumer
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
+import java.io.Serializable
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), OnDeviceItemClickListner {
 
-    private lateinit var mAdapter: DevicesAdapter
+    private lateinit var mAdapter: DeviceListAdapter
     private lateinit var mViewModel: DeviceListViewModel
     private lateinit var mActivityBinding: ActivityDeviceListBinding
 
@@ -47,10 +50,17 @@ class MainActivity : AppCompatActivity() {
         initializeObservers()
     }
 
+    override fun onItemClick(item: Device, position: Int) {
+        Toast.makeText(this, item.deviceName , Toast.LENGTH_SHORT).show()
+        val intent = Intent(application, DeviceDetailActivity::class.java)
+        intent.putExtra("DEVICE", item )
+        startActivity(intent)
+    }
+
     private fun initializeRecyclerView() {
         mActivityBinding.recyclerView.setHasFixedSize(true)
         mActivityBinding.recyclerView.layoutManager = LinearLayoutManager(this)
-        mAdapter = DevicesAdapter(ArrayList())
+        mAdapter = DeviceListAdapter(ArrayList(), this)
         mActivityBinding.recyclerView.adapter = mAdapter
     }
 
@@ -163,19 +173,11 @@ class MainActivity : AppCompatActivity() {
         // Handle item selection
         return when (item.itemId) {
             R.id.profile -> {
-                //newGame()
                 Timber.e("Clicked on menu item")
                 val intent = Intent(this, UserActivity::class.java)
-                // To pass any data to next activity
-                //intent.putExtra("keyIdentifier", value)
-                // start your next activity
                 startActivity(intent)
                 true
             }
-//            R.id.help -> {
-//                showHelp()
-//                true
-//            }
             else -> super.onOptionsItemSelected(item)
         }
     }

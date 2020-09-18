@@ -6,7 +6,7 @@ import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import com.sushant.androidkotlin.homeautomation.R
 import com.sushant.androidkotlin.homeautomation.database.HomeAutomationDatabase
-import com.sushant.androidkotlin.homeautomation.databinding.ActivityUserBinding
+import com.sushant.androidkotlin.homeautomation.databinding.ActivityUserDetailsBinding
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
@@ -15,13 +15,13 @@ class UserActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding: ActivityUserBinding = DataBindingUtil.setContentView(this, R.layout.activity_user)
+        val binding: ActivityUserDetailsBinding = DataBindingUtil.setContentView(this, R.layout.activity_user_details)
 
         initInstance(binding)
     }
 
     @SuppressLint("CheckResult")
-    private fun initInstance(binding: ActivityUserBinding) {
+    private fun initInstance(binding: ActivityUserDetailsBinding) {
         val db = HomeAutomationDatabase.getInstance(application)
         db.userDao.getUserDetails()
             .observeOn(AndroidSchedulers.mainThread())

@@ -2,7 +2,13 @@
     <string name="app_name">HomeAutomation</string>
     <string name="menu_item_profile">Profile</string>
     <string name="msg_no_internet">Unable to get the data. Please try with stable Internet</string>
-    <string name="text_first_name">First name: </string>
-    <string name="text_last_name">Last name: </string>
-    <string name="text_birth_date">Birth date: </string>
+    <string name="text_first_name">First name</string>
+    <string name="text_last_name">Last name</string>
+    <string name="text_birth_date">Birth date</string>
+    <string name="text_save">Save</string>
+    <string name="text_cancel">Cancel</string>
+    <string name="text_city">City</string>
+    <string name="text_dob">D.O.B</string>
+    <string name="text_address">Address</string>
+    <string name="text_edit">Edit</string>
 </resources>
