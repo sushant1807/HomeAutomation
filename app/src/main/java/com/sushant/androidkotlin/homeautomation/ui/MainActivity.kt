@@ -27,7 +27,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Consumer
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
-import java.io.Serializable
 
 class MainActivity : AppCompatActivity(), OnDeviceItemClickListner {
 
@@ -47,13 +46,13 @@ class MainActivity : AppCompatActivity(), OnDeviceItemClickListner {
         Timber.plant(Timber.DebugTree());
 
         initializeRecyclerView()
-        initializeObservers()
+        getDevicesFromLocal(applicationContext)
     }
 
     override fun onItemClick(item: Device, position: Int) {
-        Toast.makeText(this, item.deviceName , Toast.LENGTH_SHORT).show()
+        //Toast.makeText(this, item.deviceName, Toast.LENGTH_SHORT).show()
         val intent = Intent(application, DeviceDetailActivity::class.java)
-        intent.putExtra("DEVICE", item )
+        intent.putExtra("DEVICE", item)
         startActivity(intent)
     }
 
@@ -67,20 +66,20 @@ class MainActivity : AppCompatActivity(), OnDeviceItemClickListner {
     private fun initializeObservers() {
         mViewModel.fetchDevicesFromServer(this, false).observe(this,
             Observer { kt ->
-            Timber.e("initializeObservers ")
-            try {
-                //if (kt.isNotEmpty()) {
-                storeDevicesLocally(kt.devices, application)
-                Timber.e("initializeObservers:  %s ", kt.user)
-                getDevicesFromLocal(application)
-                storeUserLocally(kt.user, application)
-                //}
-            } catch (e: Exception ) {
-                e.printStackTrace()
-                Timber.e("Catch exception %s ", e.message)
-            }
+                Timber.e("initializeObservers ")
+                try {
+                    //if (kt.isNotEmpty()) {
+                    storeDevicesLocally(kt.devices, application)
+                    Timber.e("initializeObservers:  %s ", kt.user)
+                    getDevicesFromLocal(application)
+                    storeUserLocally(kt.user, application)
+                    //}
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    Timber.e("Catch exception %s ", e.message)
+                }
 
-        })
+            })
         mViewModel.mShowProgressBar.observe(this, Observer { bt ->
             if (bt) {
                 mActivityBinding.progressBar.visibility = View.VISIBLE
@@ -100,12 +99,12 @@ class MainActivity : AppCompatActivity(), OnDeviceItemClickListner {
                 db.devicesDao.insert(device)
             }
                 .subscribeOn(Schedulers.io())
-                .subscribe( {
+                .subscribe({
                     Timber.e("Inserted into device")
                     list.add(device.deviceName)
-                } , { throwable ->
-                Timber.e("Inserted into device failure %s ", throwable.message)
-            })
+                }, { throwable ->
+                    Timber.e("Inserted into device failure %s ", throwable.message)
+                })
         }
 
         if (devices.size === list.size) {
@@ -117,19 +116,19 @@ class MainActivity : AppCompatActivity(), OnDeviceItemClickListner {
     private fun storeUserLocally(user: User, context: Context) {
         Timber.e("storeUserLocally ")
         val db = HomeAutomationDatabase.getInstance(context)
-            Completable.fromRunnable {
-                db.userDao.insertIntoUser(user)
-            }
-                .subscribeOn(Schedulers.io())
-                .doOnError(Consumer {
-                    Timber.e("Reached doOnError in storeUserLocally")
-                })
-                .subscribe ( {
-                    Timber.e("Inserted into User")
-                    storeUserAddressLocally(user, context)
-                }, { throwable ->
-                    Timber.e("Inserted into User failure %s ", throwable.message)
-                })
+        Completable.fromRunnable {
+            db.userDao.insertIntoUser(user)
+        }
+            .subscribeOn(Schedulers.io())
+            .doOnError(Consumer {
+                Timber.e("Reached doOnError in storeUserLocally")
+            })
+            .subscribe({
+                Timber.e("Inserted into User")
+                storeUserAddressLocally(user, context)
+            }, { throwable ->
+                Timber.e("Inserted into User failure %s ", throwable.message)
+            })
     }
 
     @SuppressLint("CheckResult")
@@ -143,7 +142,7 @@ class MainActivity : AppCompatActivity(), OnDeviceItemClickListner {
             .doOnError(Consumer {
                 Timber.e("Reached doOnError in storeUserAddressLocally")
             })
-            .subscribe ( {
+            .subscribe({
                 Timber.e("Inserted into Address")
             }, { throwable ->
                 Timber.e("Inserted into Address failure %s ", throwable.message)
@@ -157,8 +156,14 @@ class MainActivity : AppCompatActivity(), OnDeviceItemClickListner {
         db.devicesDao.getAllDevices()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
-            .subscribe {
-                it -> mAdapter.setData(it);
+            .subscribe { it ->
+                if (it.isEmpty()) {
+                    Timber.e("it.isEmpty()")
+                    initializeObservers()
+                }  else {
+                    Timber.e("it.isEmpty() else ")
+                    mAdapter.setData(it);
+                }
                 Timber.e("getDevicesFromLocal %s ", it.toString())
             }
     }

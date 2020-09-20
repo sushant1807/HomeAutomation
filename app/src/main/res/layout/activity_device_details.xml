@@ -3,15 +3,18 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-    <androidx.constraintlayout.widget.ConstraintLayout
+
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:id="@+id/image_layout"
         tools:context=".CarDetailsActivity">
 
-        <ImageView
+        <!--<ImageView
             android:id="@+id/image_device"
             android:layout_width="match_parent"
-            android:layout_height="250dp"
+            android:layout_height="180dp"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -19,34 +22,160 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.062"
-            android:src="@drawable/baseline_online_prediction_24" />
+            android:src="@drawable/baseline_online_prediction_24" />-->
 
-        <TextView
-            android:id="@+id/device_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
-            android:gravity="center_horizontal"
-            android:textSize="30sp"
-            app:layout_constraintBottom_toTopOf="@+id/device_description"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/image_device"
-            tools:text="Rols Royace" />
-
-        <TextView
-            android:id="@+id/device_description"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="16dp"
-            android:text="Good Car"
-            android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/device_name" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_margin="4dp"
+            android:id="@+id/device_name_layout">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_device_name"
+                android:layout_marginStart="8dp"/>
+
+            <TextView
+                android:id="@+id/device_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:layout_marginStart="16dp"
+                android:textSize="22sp"
+                tools:text="Rols Royace" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/device_name_layout"
+            android:layout_margin="4dp"
+            android:id="@+id/product_type_layout">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_product_type"
+                android:id="@+id/product_type_text"
+                android:layout_marginStart="8dp"/>
+
+            <TextView
+                android:id="@+id/device_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/product_type_text"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="16dp"
+                android:textSize="22sp"
+                tools:text="Rols Royace" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/product_type_layout"
+            android:layout_margin="4dp"
+            android:visibility="gone"
+            android:id="@+id/mode_layout">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_mode"
+                android:id="@+id/mode_text"
+                android:layout_marginTop="4dp"
+                android:textSize="20sp"
+                android:layout_marginStart="16dp"/>
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:layout_width="wrap_content"
+                android:layout_marginTop="4dp"
+                android:id="@+id/mySwitch"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/mode_layout"
+            android:layout_margin="4dp"
+            android:visibility="visible"
+            android:id="@+id/position_layout">
+
+            <TextView
+                android:id="@+id/vertical_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="@string/text_position"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/seekBar_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/seekBar"
+                android:layout_margin="8dp"
+                android:text="0"
+                android:textSize="32sp" />
+
+           <!-- <SeekBar
+                android:id="@+id/seekBar"
+                android:layout_alignParentEnd="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:max="100"
+                android:rotation="270"
+                />-->
+
+            <SeekBar
+                android:id="@+id/seekBar"
+                android:layout_below="@+id/vertical_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/position_layout"
+            android:layout_gravity="bottom">
+
+            <Button
+                android:id="@+id/accept_btn"
+                android:layout_width="120dp"
+                android:layout_height="72dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="32dp"
+                android:text="@string/text_save"
+                android:layout_marginBottom="60dp" />
+
+            <Button
+                android:id="@+id/cancel__btn"
+                android:layout_width="120dp"
+                android:layout_height="72dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="40dp"
+                android:text="@string/text_cancel"
+                android:layout_marginBottom="60dp" />
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
 </layout>

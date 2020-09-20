@@ -21,8 +21,7 @@ class DeviceListAdapter(var items : List<Device>, var clickListner: OnDeviceItem
     }
 
     override fun onBindViewHolder(holder: DeviceViewHolder, position: Int) {
-        holder.initialize(items.get(position),clickListner)
-
+        holder.initialize(items.get(position), clickListner)
     }
 
     fun setData(list: List<Device>) {
@@ -34,10 +33,31 @@ class DeviceListAdapter(var items : List<Device>, var clickListner: OnDeviceItem
 class DeviceViewHolder(itemView:View) : RecyclerView.ViewHolder(itemView){
     private var titleTv = itemView.titleTv
     private var descriptionTv = itemView.descriptionTv
+    private var modeTv = itemView.modeTv
+    private var intensityTv = itemView.intensityTv
+    private var modeIV = itemView.image1
 
     fun initialize(item: Device, action:OnDeviceItemClickListner){
         titleTv.text = item.deviceName
         descriptionTv.text = item.productType
+        modeTv.text = item.mode
+
+
+        if (item.mode != null && item.mode == "ON") {
+            modeIV.setImageResource(R.drawable.baseline_toggle_on_24)
+        }
+
+        when (item.productType) {
+            "RollerShutter" -> {
+                intensityTv.text = item.position.toString()
+            }
+            "Heater" -> {
+                intensityTv.text = item.temperature.toString()
+            }
+            else -> {
+                intensityTv.text = item.intensity.toString()
+            }
+        }
 
         itemView.setOnClickListener{
             action.onItemClick(item,adapterPosition)

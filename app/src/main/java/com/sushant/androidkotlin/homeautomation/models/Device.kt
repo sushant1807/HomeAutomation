@@ -13,5 +13,7 @@ data class Device (
     @ColumnInfo @SerializedName("deviceName") val deviceName : String,
     @ColumnInfo @SerializedName("intensity") val intensity : Int,
     @ColumnInfo @SerializedName ("mode") val mode : String?,
-    @ColumnInfo @SerializedName("productType") val productType : String
+    @ColumnInfo @SerializedName("productType") val productType : String,
+    @ColumnInfo @SerializedName("position") val position : Int,
+    @ColumnInfo @SerializedName("temperature") val temperature : Int
 ) : Serializable

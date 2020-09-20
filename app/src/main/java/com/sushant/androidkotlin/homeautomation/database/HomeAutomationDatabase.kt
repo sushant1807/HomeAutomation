@@ -39,6 +39,6 @@ abstract class HomeAutomationDatabase : RoomDatabase() {
     }
 }
 
-const val DB_VERSION = 4
+const val DB_VERSION = 6
 
 const val DB_NAME = "HomeAutomation.db"

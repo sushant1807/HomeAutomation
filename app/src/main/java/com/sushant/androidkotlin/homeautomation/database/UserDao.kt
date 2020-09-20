@@ -1,11 +1,10 @@
 package com.sushant.androidkotlin.homeautomation.database
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Update
 import com.sushant.androidkotlin.homeautomation.models.User
-import io.reactivex.Flowable
 import io.reactivex.Single
 
 @Dao
@@ -19,5 +18,8 @@ interface UserDao {
 
     @Query("SELECT * FROM user")
     fun getUserDetails(): Single<User>
+
+    @Update
+    fun updateUser(vararg user: User)
 
 }

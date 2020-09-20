@@ -218,14 +218,14 @@
                                 android:background="@drawable/baseline_my_location_24"
                                 android:padding="10dp" />
 
-                            <EditText
+                            <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="20dp"
                                 android:text="@{user.component4().component4()}"
                                 android:textSize="15sp" />
 
-                            <EditText
+                            <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="8dp"
@@ -245,14 +245,14 @@
                                 android:background="@drawable/baseline_location_city_24"
                                 android:padding="10dp" />
 
-                            <EditText
+                            <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="20dp"
                                 android:text="@{user.component4().component1()}"
                                 android:textSize="15sp" />
 
-                            <EditText
+                            <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="8dp"
@@ -272,7 +272,7 @@
                                 android:background="@drawable/baseline_location_on_black_24"
                                 android:padding="10dp" />
 
-                            <EditText
+                            <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="20dp"
@@ -283,23 +283,13 @@
                     </LinearLayout>
                 </LinearLayout>
 
-                <RelativeLayout
+                <!--<RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom">
 
                     <Button
-                        android:id="@+id/take_pic_button"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:layout_alignParentBottom="true"
-                        android:layout_centerHorizontal="true"
-                        android:layout_margin="10dp"
-                        android:visibility="gone"
-                        android:padding="15dp" />
-
-                    <Button
-                        android:id="@+id/accept_pic_btn"
+                        android:id="@+id/save_btn"
                         android:layout_width="120dp"
                         android:layout_height="72dp"
                         android:layout_alignParentStart="true"
@@ -310,7 +300,7 @@
                         android:layout_marginBottom="60dp" />
 
                     <Button
-                        android:id="@+id/retake_pic_btn"
+                        android:id="@+id/cancel_btn"
                         android:layout_width="120dp"
                         android:layout_height="72dp"
                         android:layout_alignParentEnd="true"
@@ -320,7 +310,7 @@
                         android:text="@string/text_cancel"
                         android:layout_marginBottom="60dp" />
 
-                </RelativeLayout>
+                </RelativeLayout>-->
 
 
 

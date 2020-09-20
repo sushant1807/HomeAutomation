@@ -33,6 +33,8 @@ class UserActivity : AppCompatActivity() {
                 Timber.e("getDevicesFromLocal %s ", it.toString())
             }
             }
+
+
     }
 
     /*@SuppressLint("CheckResult")

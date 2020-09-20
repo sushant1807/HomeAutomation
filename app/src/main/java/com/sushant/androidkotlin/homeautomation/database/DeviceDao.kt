@@ -1,9 +1,6 @@
 package com.sushant.androidkotlin.homeautomation.database
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.sushant.androidkotlin.homeautomation.models.Device
 import io.reactivex.Flowable
 
@@ -18,6 +15,9 @@ interface DeviceDao {
 
     @Query("SELECT * FROM device")
     fun getAllDevices(): Flowable<List<Device>>
+
+    @Update
+    fun updateDevice(vararg device: Device)
 
 
 }

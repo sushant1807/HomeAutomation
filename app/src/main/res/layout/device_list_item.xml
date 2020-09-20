@@ -38,6 +38,7 @@
                     android:layout_marginEnd="16dp"
                     android:ellipsize="end"
                     android:maxLines="1"
+                    android:hint="@string/text_last_name"
                     android:layout_marginTop="8dp"
                     android:layout_toEndOf="@+id/thumbIv"
                     android:minLines="1"
@@ -47,14 +48,76 @@
 
                 <TextView
                     android:id="@+id/descriptionTv"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
+                    android:hint="@string/text_last_name"
                     android:layout_toEndOf="@+id/thumbIv"
                     android:layout_below="@+id/titleTv"
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="16dp"
                     android:text="@{device.component5()}" />
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/descriptionTv"
+                    android:layout_toEndOf="@+id/thumbIv"
+                    android:id="@+id/layout_1"
+                    android:gravity="center"
+                    android:padding="8dp">
+
+                    <ImageView
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:padding="5dp"
+                        android:id="@+id/image1"
+                        android:src="@drawable/baseline_toggle_off_24" />
+
+                    <TextView
+                        android:id="@+id/modeTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginStart="4dp"
+                        android:hint="@string/text_off"
+                        android:layout_toEndOf="@+id/image1"
+                        android:textStyle="bold"
+                        android:text="@{device.component4()}" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/layout_2"
+                    android:layout_alignParentEnd="true"
+                    android:layout_toEndOf="@+id/layout_1"
+                    android:layout_below="@+id/descriptionTv"
+                    android:gravity="center"
+                    android:padding="8dp">
+
+                    <ImageView
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:padding="5dp"
+                        android:id="@+id/image2"
+                        android:src="@drawable/baseline_highlight_24" />
+
+                    <TextView
+                        android:id="@+id/intensityTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginStart="4dp"
+                        android:hint="@string/text_edit"
+                        android:layout_toEndOf="@+id/image2"
+                        android:textStyle="bold"
+                        android:text="@{device.component3()}" />
+
+                </RelativeLayout>
 
             </RelativeLayout>
 

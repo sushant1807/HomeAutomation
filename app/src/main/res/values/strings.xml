@@ -11,4 +11,14 @@
     <string name="text_dob">D.O.B</string>
     <string name="text_address">Address</string>
     <string name="text_edit">Edit</string>
+    <string name="text_off">OFF</string>
+    <string name="text_device_name">Name</string>
+    <string name="text_intensity">Intensity</string>
+    <string name="text_mode">Mode</string>
+    <string name="text_product_type">Product type</string>
+    <string name="text_position">Position</string>
+    <string name="text_temperature">Temperature</string>
+    <string name="text_rollerShutter">RollerShutter</string>
+    <string name="text_heater">Heater</string>
+    <string name="text_light">Light</string>
 </resources>
