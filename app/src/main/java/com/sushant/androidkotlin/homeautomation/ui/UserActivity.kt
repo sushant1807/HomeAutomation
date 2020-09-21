@@ -15,7 +15,8 @@ class UserActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding: ActivityUserDetailsBinding = DataBindingUtil.setContentView(this, R.layout.activity_user_details)
+        val binding: ActivityUserDetailsBinding =
+            DataBindingUtil.setContentView(this, R.layout.activity_user_details)
 
         initInstance(binding)
     }
@@ -26,26 +27,39 @@ class UserActivity : AppCompatActivity() {
         db.userDao.getUserDetails()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
-            .subscribe {
-                    it ->
+            .subscribe { it ->
                 val userModel = it
                 binding.user = userModel
                 Timber.e("getDevicesFromLocal %s ", it.toString())
-            }
-            }
 
-
+            }
     }
 
-    /*@SuppressLint("CheckResult")
-    private fun initInstance() {
-        val db = HomeAutomationDatabase.getInstance(application)
-        db.userDao.getUserDetails()
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io())
-            .subscribe {
-                    it -> bin
-                Timber.e("getDevicesFromLocal %s ", it.toString())
-            }
-    }*/
+
+}
+
+/* //Uncomment while implementing the Update functionality in User
+fun onSaveButtonClick() {
+    Timber.e("On Save button clicked")
+    //TODO Implement the Update functionality in User
+}
+
+fun onCancelButtonClick() {
+    Timber.e("On Cancel button clicked")
+    //TODO Implement the Update functionality in User
+
+}*/
+
+
+/*@SuppressLint("CheckResult")
+private fun initInstance() {
+    val db = HomeAutomationDatabase.getInstance(application)
+    db.userDao.getUserDetails()
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribeOn(Schedulers.io())
+        .subscribe {
+                it -> bin
+            Timber.e("getDevicesFromLocal %s ", it.toString())
+        }
+}*/
 
